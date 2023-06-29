@@ -19,6 +19,8 @@ namespace Persistence.Contexts
         public DbSet<Transport> Transports { get; set; }
         public DbSet<User> Users { get; set; }
         public DbSet<UserRole> UserRoles { get; set; }
+        public DbSet<CalculationParameter> CalculationParameters { get; set; }
+
         public override Task<int> SaveChangesAsync(CancellationToken cancellationToken = default)
         {
             return base.SaveChangesAsync(cancellationToken);

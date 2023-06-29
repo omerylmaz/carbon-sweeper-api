@@ -1,10 +1,13 @@
 ﻿
 
 using Application.Repos;
+using Application.Services;
+using Domain.Entities;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
 using Persistence.Contexts;
 using Persistence.Repos;
+using Persistence.Services;
 
 namespace Persistence
 {
@@ -16,8 +19,10 @@ namespace Persistence
             {
                 builder.EnableRetryOnFailure(5, TimeSpan.FromSeconds(10), null);
             }));
-            //services.AddScoped<Application.Repos.IWriteRepo, WriteRepo>();
-            //services.AddScoped<Application.Repos.IReadRepo, ReadRepo>();
+            services.AddScoped<IWriteRepo<User>, WriteRepo<User>>();
+            services.AddScoped<IReadRepo<User>, ReadRepo<User>>();
+            services.AddScoped<IAuthService, AuthService>();
+            services.AddScoped<ITokenService, TokenService>();
 
 
         }

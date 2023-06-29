@@ -47,3 +47,8 @@ D:\Workspace\carbon-sweeper-api\WebAPI\bin\Debug\net7.0\Microsoft.EntityFramewor
 D:\Workspace\carbon-sweeper-api\WebAPI\bin\Debug\net7.0\Microsoft.Extensions.DependencyModel.dll
 D:\Workspace\carbon-sweeper-api\WebAPI\bin\Debug\net7.0\Mono.TextTemplating.dll
 D:\Workspace\carbon-sweeper-api\WebAPI\bin\Debug\net7.0\System.CodeDom.dll
+D:\Workspace\carbon-sweeper-api\WebAPI\bin\Debug\net7.0\Microsoft.IdentityModel.Abstractions.dll
+D:\Workspace\carbon-sweeper-api\WebAPI\bin\Debug\net7.0\Microsoft.IdentityModel.JsonWebTokens.dll
+D:\Workspace\carbon-sweeper-api\WebAPI\bin\Debug\net7.0\Microsoft.IdentityModel.Logging.dll
+D:\Workspace\carbon-sweeper-api\WebAPI\bin\Debug\net7.0\Microsoft.IdentityModel.Tokens.dll
+D:\Workspace\carbon-sweeper-api\WebAPI\bin\Debug\net7.0\System.IdentityModel.Tokens.Jwt.dll
