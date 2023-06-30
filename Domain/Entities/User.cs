@@ -16,11 +16,12 @@ namespace Domain.Entities
         public int? HouseId { get; set; }
         public int UserRoleId { get; set; }
         public UserRole UserRole { get; set; }
-        public House? House { get; set; }
+        //public House? House { get; set; }
         public List<Transport>? Transports { get; set; }
         public List<GeneralConsumption>? GeneralConsumptions { get; set; }
         public string? AccessToken { get; set; }
         public DateTime? ExpirationDate { get; set; }
         public string? RefreshToken { get; set; }
+        public decimal FootPrint { get; set; }
     }
 }

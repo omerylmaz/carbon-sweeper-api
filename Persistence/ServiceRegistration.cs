@@ -23,8 +23,7 @@ namespace Persistence
             services.AddScoped<IReadRepo<User>, ReadRepo<User>>();
             services.AddScoped<IAuthService, AuthService>();
             services.AddScoped<ITokenService, TokenService>();
-
-
+            services.AddScoped<ICalculationService, CalculationService>();
         }
     }
 }

@@ -18,7 +18,7 @@ namespace WebAPI.Controllers
         [HttpPost]
         public async Task<IActionResult> CalculateFootPrintAsync(GetCalculationRequest getCalculationRequest)
         {
-            var result = _calculatorService.CalculateFootPrint(getCalculationRequest);
+            var result = await _calculatorService.CalculateFootPrintAsync(getCalculationRequest);
             //var user = await _userService.LoginAsync(loginUserRequest);
             //var user = await _authService.LoginAsync(loginUserRequest);
             return Ok(result);

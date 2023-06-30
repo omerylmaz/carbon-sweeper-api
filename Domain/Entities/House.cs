@@ -11,6 +11,6 @@ namespace Domain.Entities
         public decimal? Electricity { get; set; }
         public decimal? Coal { get; set; }
         public decimal? LPG { get; set; }
-        public List<User> Users { get; set; }
+        public int UserId { get; set; }
     }
 }

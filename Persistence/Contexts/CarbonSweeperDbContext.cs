@@ -31,11 +31,13 @@ namespace Persistence.Contexts
 
 
 
-            base.OnModelCreating(modelBuilder);
-            modelBuilder.Entity<User>()
-            .HasOne(u => u.House)             // User has one House
-            .WithMany(h => h.Users)           // House has many Users
-            .HasForeignKey(u => u.HouseId);   // Foreign key property in User class
+            //base.OnModelCreating(modelBuilder);
+            //modelBuilder.Entity<User>()
+            //.HasOne(
+            //
+            //u => u.HouseId)             // User has one House
+            //.WithOne(h => h.UserId)           // House has many Users
+            //.HasForeignKey(u => u.HouseId);   // Foreign key property in User class
 
             modelBuilder.Entity<User>()
                 .HasOne(u => u.UserRole)          // User has one UserRole

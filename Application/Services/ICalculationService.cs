@@ -9,6 +9,6 @@ namespace Application.Services
 {
     public interface ICalculationService
     {
-        Task<decimal> CalculateFootPrint(GetCalculationRequest getCalculationRequest);
+        Task<decimal> CalculateFootPrintAsync(GetCalculationRequest getCalculationRequest);
     }
 }
