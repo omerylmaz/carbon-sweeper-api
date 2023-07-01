@@ -1,0 +1,43 @@
+# Örnek .gitignore dosyası
+
+# Proje yapılandırma dosyaları
+*.suo
+*.user
+*.sln.docstates
+
+# Derleme sonucu dosyalar
+bin/
+obj/
+# VSCode ayar dosyaları
+.vscode/
+.vs/
+
+# NuGet paketleri
+packages/
+
+# Yerel yapılandırma dosyaları
+appsettings.json
+appsettings.Development.json
+
+# Log dosyaları
+*.log
+logs/
+
+# Geçici dosyalar
+temp/
+*.tmp
+
+# Yedek dosyalar
+*.bak
+*.backup
+
+# VS Test Runner sonuç dosyaları
+TestResults/
+
+# Eklenti dosyaları
+*.dll
+*.exe
+
+# IDE özel dosyaları
+[Oo]bj/
+[Bb]in/
