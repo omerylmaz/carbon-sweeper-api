@@ -23,5 +23,15 @@ namespace WebAPI.Controllers
             //var user = await _authService.LoginAsync(loginUserRequest);
             return Ok(result);
         }
+
+        [Route("get-foot-print-warnings/{userId}")]
+        [HttpGet]
+        public async Task<IActionResult> GetFootPrintWarnings([FromRoute]int userId)
+        {
+            var result = await _calculatorService.GetFootPrintWarnings(userId);
+            //var user = await _userService.LoginAsync(loginUserRequest);
+            //var user = await _authService.LoginAsync(loginUserRequest);
+            return Ok(result);
+        }
     }
 }

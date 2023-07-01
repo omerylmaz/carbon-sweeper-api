@@ -65,5 +65,29 @@ namespace Persistence.Services
             await _userWriteRepo.SaveChangesAsync();
             return new LoginResponse() { Token = tokenResponse };
         }
+
+        public async Task<bool> RegisterAsync(RegisterRequest registerUserRequest)
+        {
+            var user = new User()
+            {
+                Email = registerUserRequest.Email,
+                Password = registerUserRequest.Password,
+                UserName = registerUserRequest.Username,
+                FirstName = registerUserRequest.FirstName,
+                LastName = registerUserRequest.LastName,
+                UserRoleId = 1
+            };
+            await _userWriteRepo.AddAsync(user);
+            try
+            {
+            return await _userWriteRepo.SaveChangesAsync() > 0;
+
+            }
+            catch (Exception e)
+            {
+
+                throw;
+            }
+        }
     }
 }

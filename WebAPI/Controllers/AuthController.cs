@@ -28,5 +28,14 @@ namespace WebAPI.Controllers
             var user = await _authService.LoginAsync(loginUserRequest);
             return Ok(user);
         }
+
+        [Route("register")]
+        [HttpPost]
+        public async Task<IActionResult> RegisterAsync(RegisterRequest registerUserRequest)
+        {
+            //var user = await _userService.LoginAsync(loginUserRequest);
+            var user = await _authService.RegisterAsync(registerUserRequest);
+            return Ok(user);
+        }
     }
 }

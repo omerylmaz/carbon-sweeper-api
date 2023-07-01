@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations.Schema;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -18,10 +19,12 @@ namespace Domain.Entities
         public UserRole UserRole { get; set; }
         //public House? House { get; set; }
         public List<Transport>? Transports { get; set; }
-        public List<GeneralConsumption>? GeneralConsumptions { get; set; }
+        [ForeignKey("GeneralConsumptions")]
+        public int? GeneralConsumptionId { get; set; }
         public string? AccessToken { get; set; }
         public DateTime? ExpirationDate { get; set; }
         public string? RefreshToken { get; set; }
         public decimal FootPrint { get; set; }
+        public decimal FootPrintReduction { get; set; }
     }
 }

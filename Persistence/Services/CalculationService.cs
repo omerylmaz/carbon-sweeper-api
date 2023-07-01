@@ -1,4 +1,6 @@
-﻿using Application.Dto.Request;
+﻿using Application.Constants;
+using Application.Dto.Request;
+using Application.Dto.Response;
 using Application.Repos;
 using Application.Services;
 using Domain.Entities;
@@ -16,6 +18,10 @@ namespace Persistence.Services
         private readonly IWriteRepo<User> _userWriteRepo;
         private readonly IReadRepo<House> _houseReadRepo;
         private readonly IWriteRepo<House> _houseWriteRepo;
+        private readonly IReadRepo<GeneralConsumption> _consumptionReadRepo;
+        private readonly IWriteRepo<GeneralConsumption> _consumptionWriteRepo;
+        private readonly IReadRepo<Transport> _transportReadRepo;
+        private readonly IWriteRepo<Transport> _transportWriteRepo;
 
 
         public CalculationService(
@@ -23,6 +29,11 @@ namespace Persistence.Services
             IWriteRepo<User> userWriteRepo,
             IReadRepo<House> houseReadRepo,
             IWriteRepo<House> houseWriteRepo
+,
+            IReadRepo<GeneralConsumption> consumptionReadRepo,
+            IWriteRepo<GeneralConsumption> consumptionWriteRepo,
+            IReadRepo<Transport> transportReadRepo,
+            IWriteRepo<Transport> transportWriteRepo
             //house
 
             )
@@ -31,6 +42,10 @@ namespace Persistence.Services
             _userReadRepo = userReadRepo;
             _houseWriteRepo = houseWriteRepo;
             _houseReadRepo = houseReadRepo;
+            _consumptionReadRepo = consumptionReadRepo;
+            _consumptionWriteRepo = consumptionWriteRepo;
+            _transportReadRepo = transportReadRepo;
+            _transportWriteRepo = transportWriteRepo;
             //house
         }
         public async Task<decimal> CalculateFootPrintAsync(GetCalculationRequest getCalculationRequest)
@@ -38,51 +53,143 @@ namespace Persistence.Services
             //var user = await _userReadRepo.GetByIdAsync(getCalculationRequest.UserId);
             var user = await _userReadRepo.GetSingleAsync(x => (int)x.Id == (int)getCalculationRequest.UserId);
 
-            var electricityFootPrint = getCalculationRequest.ElectricityTl * 1.5M * 12;
-            var coalFootPrint = getCalculationRequest.CoalTl * 3M * 12;
-            var lpgFootPrint = getCalculationRequest.LPGTl * 2M * 12;
-            var carFuelFootPrint = getCalculationRequest.CarFuelTl * 1.5M * 12;
+
+            var electricityFootPrint = getCalculationRequest.ElectricityTl * 0.8M * 12;
+            var coalFootPrint = getCalculationRequest.CoalTl * 0.8M * 12;
+            var lpgFootPrint = getCalculationRequest.LPGTl * 0.4M * 12;
+            var carFuelFootPrint = getCalculationRequest.CarFuelTl * 0.5M * 12;
             var dressingFootPrint = getCalculationRequest.DressingTl * 0.03M * 12;
             var electronicsFootPrint = getCalculationRequest.ElectronicsTl * 0.05M * 12;
-            var paperProdcutFootPrint = getCalculationRequest.PaperProductTl * 0.03M * 12;
+            var paperProductFootPrint = getCalculationRequest.PaperProductTl * 0.03M * 12;
+            var funFootPrint = getCalculationRequest.FunTl * 0.01M * 12;
             var foodFootPrint = 0M;
             switch (getCalculationRequest.DietType)
             {
-                case 1: // Vegan
+                case (short)Diet.Vegan: // Vegan
                     foodFootPrint = getCalculationRequest.FoodTl * 0.02M * 12;
                     break;
-                case 2: // Vegetarian
+                case (short)Diet.Vegetarian: // Vegetarian
                     foodFootPrint = getCalculationRequest.FoodTl * 0.03M * 12;
                     break;
-                case 3: // Pescatarian
+                case (short)Diet.Pescatarian: // Pescatarian
                     foodFootPrint = getCalculationRequest.FoodTl * 0.04M * 12;
                     break;
-                case 4: // Little Meat
+                case (short)Diet.LittleMeat: // Little Meat
                     foodFootPrint = getCalculationRequest.FoodTl * 0.05M * 12;
                     break;
-                case 5: // Medium Meat
+                case (short)Diet.MediumMeat: // Medium Meat
                     foodFootPrint = getCalculationRequest.FoodTl * 0.07M * 12;
                     break;
-                case 6: // Hard Meat
+                case (short)Diet.HardMeat: // Hard Meat
                     foodFootPrint = getCalculationRequest.FoodTl * 0.09M * 12;
                     break;
                 default:
                     break;
             }
-        
+            var publicTransportFootPrint = 0M;
+            switch (getCalculationRequest.TransportFrequency)
+            {
+                case (short)UsageTransportFrequency.Never:
+                    publicTransportFootPrint = 0M;
+                    break;
+                case (short)UsageTransportFrequency.Rarely:
+                    publicTransportFootPrint = 0.1M;
+                    break;
+                case (short)UsageTransportFrequency.Sometimes:
+                    publicTransportFootPrint = 0.25M;
+                    break;
+                case (short)UsageTransportFrequency.Often:
+                    publicTransportFootPrint = 0.50M;
+                    break;
+                case (short)UsageTransportFrequency.Always:
+                    publicTransportFootPrint = 0.75M;
+                    break;
+                default:
+                    break;
+            }
 
-            var house = new House();
-            house.Coal = coalFootPrint;
-            house.LPG = lpgFootPrint;
-            house.Electricity = electricityFootPrint;
-            await _houseWriteRepo.AddAsync(house);
 
-            
+
+            var house = await _houseReadRepo.GetSingleAsync(x => x.UserId == getCalculationRequest.UserId);
+            if (house == null)
+            {
+                house = new House();
+                house.Coal = coalFootPrint;
+                house.LPG = lpgFootPrint;
+                house.Electricity = electricityFootPrint;
+                house.UserId = getCalculationRequest.UserId;
+                await _houseWriteRepo.AddAsync(house);
+
+            }
+            else
+            {
+                house.Coal = coalFootPrint;
+                house.LPG = lpgFootPrint;
+                house.Electricity = electricityFootPrint;
+                house.UserId = getCalculationRequest.UserId;
+            }
+            await _houseWriteRepo.SaveChangesAsync();
+
+            var generalConsumption = await _consumptionReadRepo.GetSingleAsync(x => x.UserId == getCalculationRequest.UserId);
+
+            if (generalConsumption == null)
+            {
+                generalConsumption = new GeneralConsumption();
+                generalConsumption.UserId = getCalculationRequest.UserId;
+                await _consumptionWriteRepo.AddAsync(generalConsumption);
+            }
+
+            generalConsumption.PaperProductFootPrint = paperProductFootPrint;
+            generalConsumption.FoodFootPrint = foodFootPrint;
+            generalConsumption.DressingFootPrint = dressingFootPrint;
+            generalConsumption.FunFootPrint = funFootPrint;
+            generalConsumption.ElectronicsFootPrint = electronicsFootPrint;
+
+            await _consumptionWriteRepo.SaveChangesAsync();
+
+            var transport = await _transportReadRepo.GetSingleAsync(x => x.UserId == getCalculationRequest.UserId);
+            if (transport == null)
+            {
+                transport = new Transport();
+                transport.UserId = getCalculationRequest.UserId;
+                await _transportWriteRepo.AddAsync(transport);
+            }
+            transport.CarFootPrint = carFuelFootPrint;
+            transport.PublicTransportFootPrint = publicTransportFootPrint;
+            transport.UserId = getCalculationRequest.UserId;
+            await _transportWriteRepo.SaveChangesAsync();
+
+            var total = electricityFootPrint + coalFootPrint + lpgFootPrint + carFuelFootPrint + dressingFootPrint + electronicsFootPrint + paperProductFootPrint + funFootPrint + foodFootPrint + publicTransportFootPrint;
+            //var reduction = user.FootPrintReduction / total;
+            if (user.FootPrint != 0)
+                user.FootPrintReduction += user.FootPrint - total;
+            user.FootPrint = total;
+
             await _userWriteRepo.SaveChangesAsync();
-            throw new NotImplementedException();
+            return total;
 
-            //var total = electricityFootPrint + coalFootPrint;
             //user.FootPrint = total;
+        }
+
+        public async Task<GetFootPrintWarningListResponse> GetFootPrintWarnings(int userId)
+        {
+            var user = await _userReadRepo.GetSingleAsync(x => x.Id == userId);
+            var  transport = await _transportReadRepo.GetSingleAsync(x => x.UserId == userId);
+            var consumption = await _consumptionReadRepo.GetSingleAsync(x => x.UserId == userId);
+            var house = await _houseReadRepo.GetSingleAsync(x => x.UserId == userId);
+            var messages = new List<GetFootPrintWarningResponse>();
+
+
+            if (house.LPG > FootPrintLimits.LPG) 
+            {
+                messages.Add(new GetFootPrintWarningResponse() { Message = UserCalculationWarningsMessages.UserLpgBad((decimal)(house.LPG * 0.02M * 12)) , IsSuccess = false});
+            }
+            else
+            {
+                messages.Add(new GetFootPrintWarningResponse() { Message = UserCalculationWarningsMessages.UserLPGPerfect((decimal)(house.LPG * 0.02M * 12)), IsSuccess = true });
+            }
+            return new GetFootPrintWarningListResponse() { Messages = messages };
+
         }
         //ctrl + k + u uncomment
         //ctrl + k + d lind fix

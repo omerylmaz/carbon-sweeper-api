@@ -14,5 +14,6 @@ namespace Application.Services
     public interface IAuthService
     {
         Task<LoginResponse> LoginAsync(LoginRequest loginUserRequest);
+        Task<bool> RegisterAsync(RegisterRequest registerUserRequest);
     }
 }

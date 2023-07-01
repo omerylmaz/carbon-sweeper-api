@@ -21,9 +21,15 @@ namespace Persistence
             }));
             services.AddScoped<IWriteRepo<User>, WriteRepo<User>>();
             services.AddScoped<IReadRepo<User>, ReadRepo<User>>();
+            services.AddScoped<IWriteRepo<GeneralConsumption>, WriteRepo<GeneralConsumption>>();
+            services.AddScoped<IReadRepo<GeneralConsumption>, ReadRepo<GeneralConsumption>>();
+            services.AddScoped<IWriteRepo<Transport>, WriteRepo<Transport>>();
+            services.AddScoped<IReadRepo<Transport>, ReadRepo<Transport>>();
+            services.AddScoped<IWriteRepo<House>, WriteRepo<House>>();
+            services.AddScoped<IReadRepo<House>, ReadRepo<House>>();
             services.AddScoped<IAuthService, AuthService>();
             services.AddScoped<ITokenService, TokenService>();
             services.AddScoped<ICalculationService, CalculationService>();
-        }
+    }
     }
 }
