@@ -1,4 +1,5 @@
 using WebAPI.Helpers;
+using WebAPI.Middlewares;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -25,6 +26,7 @@ app.UseHttpsRedirection();
 app.UseAuthentication();
 //app.UseAuthorization();
 app.UseCors();
+app.UseMiddleware<ResponseWrapperAndGlobalExceptionHandlerMiddleware>();
 
 
 
