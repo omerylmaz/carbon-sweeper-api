@@ -1,20 +1,20 @@
 {
   "format": 1,
   "restore": {
-    "D:\\Workspace\\carbon-sweeper-api\\Application\\Application.csproj": {}
+    "D:\\VSCode Workspace\\Carbon\\Application\\Application.csproj": {}
   },
   "projects": {
-    "D:\\Workspace\\carbon-sweeper-api\\Application\\Application.csproj": {
+    "D:\\VSCode Workspace\\Carbon\\Application\\Application.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "D:\\Workspace\\carbon-sweeper-api\\Application\\Application.csproj",
+        "projectUniqueName": "D:\\VSCode Workspace\\Carbon\\Application\\Application.csproj",
         "projectName": "Application",
-        "projectPath": "D:\\Workspace\\carbon-sweeper-api\\Application\\Application.csproj",
-        "packagesPath": "C:\\Users\\YI018\\.nuget\\packages\\",
-        "outputPath": "D:\\Workspace\\carbon-sweeper-api\\Application\\obj\\",
+        "projectPath": "D:\\VSCode Workspace\\Carbon\\Application\\Application.csproj",
+        "packagesPath": "C:\\Users\\Barış\\.nuget\\packages\\",
+        "outputPath": "D:\\VSCode Workspace\\Carbon\\Application\\obj\\",
         "projectStyle": "PackageReference",
         "configFilePaths": [
-          "C:\\Users\\YI018\\AppData\\Roaming\\NuGet\\NuGet.Config",
+          "C:\\Users\\Barış\\AppData\\Roaming\\NuGet\\NuGet.Config",
           "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
         ],
         "originalTargetFrameworks": [
@@ -28,8 +28,8 @@
           "net7.0": {
             "targetAlias": "net7.0",
             "projectReferences": {
-              "D:\\Workspace\\carbon-sweeper-api\\Domain\\Domain.csproj": {
-                "projectPath": "D:\\Workspace\\carbon-sweeper-api\\Domain\\Domain.csproj"
+              "D:\\VSCode Workspace\\Carbon\\Domain\\Domain.csproj": {
+                "projectPath": "D:\\VSCode Workspace\\Carbon\\Domain\\Domain.csproj"
               }
             }
           }
@@ -65,21 +65,21 @@
               "privateAssets": "all"
             }
           },
-          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\7.0.203\\RuntimeIdentifierGraph.json"
+          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\7.0.202\\RuntimeIdentifierGraph.json"
         }
       }
     },
-    "D:\\Workspace\\carbon-sweeper-api\\Domain\\Domain.csproj": {
+    "D:\\VSCode Workspace\\Carbon\\Domain\\Domain.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "D:\\Workspace\\carbon-sweeper-api\\Domain\\Domain.csproj",
+        "projectUniqueName": "D:\\VSCode Workspace\\Carbon\\Domain\\Domain.csproj",
         "projectName": "Domain",
-        "projectPath": "D:\\Workspace\\carbon-sweeper-api\\Domain\\Domain.csproj",
-        "packagesPath": "C:\\Users\\YI018\\.nuget\\packages\\",
-        "outputPath": "D:\\Workspace\\carbon-sweeper-api\\Domain\\obj\\",
+        "projectPath": "D:\\VSCode Workspace\\Carbon\\Domain\\Domain.csproj",
+        "packagesPath": "C:\\Users\\Barış\\.nuget\\packages\\",
+        "outputPath": "D:\\VSCode Workspace\\Carbon\\Domain\\obj\\",
         "projectStyle": "PackageReference",
         "configFilePaths": [
-          "C:\\Users\\YI018\\AppData\\Roaming\\NuGet\\NuGet.Config",
+          "C:\\Users\\Barış\\AppData\\Roaming\\NuGet\\NuGet.Config",
           "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
         ],
         "originalTargetFrameworks": [
@@ -120,7 +120,7 @@
               "privateAssets": "all"
             }
           },
-          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\7.0.203\\RuntimeIdentifierGraph.json"
+          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\7.0.202\\RuntimeIdentifierGraph.json"
         }
       }
     }

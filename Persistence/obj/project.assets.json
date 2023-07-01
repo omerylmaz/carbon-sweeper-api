@@ -1653,19 +1653,19 @@
     ]
   },
   "packageFolders": {
-    "C:\\Users\\YI018\\.nuget\\packages\\": {}
+    "C:\\Users\\Barış\\.nuget\\packages\\": {}
   },
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "D:\\Workspace\\carbon-sweeper-api\\Persistence\\Persistence.csproj",
+      "projectUniqueName": "D:\\VSCode Workspace\\Carbon\\Persistence\\Persistence.csproj",
       "projectName": "Persistence",
-      "projectPath": "D:\\Workspace\\carbon-sweeper-api\\Persistence\\Persistence.csproj",
-      "packagesPath": "C:\\Users\\YI018\\.nuget\\packages\\",
-      "outputPath": "D:\\Workspace\\carbon-sweeper-api\\Persistence\\obj\\",
+      "projectPath": "D:\\VSCode Workspace\\Carbon\\Persistence\\Persistence.csproj",
+      "packagesPath": "C:\\Users\\Barış\\.nuget\\packages\\",
+      "outputPath": "D:\\VSCode Workspace\\Carbon\\Persistence\\obj\\",
       "projectStyle": "PackageReference",
       "configFilePaths": [
-        "C:\\Users\\YI018\\AppData\\Roaming\\NuGet\\NuGet.Config",
+        "C:\\Users\\Barış\\AppData\\Roaming\\NuGet\\NuGet.Config",
         "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
       ],
       "originalTargetFrameworks": [
@@ -1679,11 +1679,11 @@
         "net7.0": {
           "targetAlias": "net7.0",
           "projectReferences": {
-            "D:\\Workspace\\carbon-sweeper-api\\Application\\Application.csproj": {
-              "projectPath": "D:\\Workspace\\carbon-sweeper-api\\Application\\Application.csproj"
+            "D:\\VSCode Workspace\\Carbon\\Application\\Application.csproj": {
+              "projectPath": "D:\\VSCode Workspace\\Carbon\\Application\\Application.csproj"
             },
-            "D:\\Workspace\\carbon-sweeper-api\\Domain\\Domain.csproj": {
-              "projectPath": "D:\\Workspace\\carbon-sweeper-api\\Domain\\Domain.csproj"
+            "D:\\VSCode Workspace\\Carbon\\Domain\\Domain.csproj": {
+              "projectPath": "D:\\VSCode Workspace\\Carbon\\Domain\\Domain.csproj"
             }
           }
         }
@@ -1737,7 +1737,7 @@
             "privateAssets": "all"
           }
         },
-        "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\7.0.203\\RuntimeIdentifierGraph.json"
+        "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\7.0.202\\RuntimeIdentifierGraph.json"
       }
     }
   }

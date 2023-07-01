@@ -20,6 +20,7 @@ namespace Application.Dto.Request
         public decimal FoodTl { get; set; }
         public decimal ElectronicsTl { get; set; }
         public decimal PaperProductTl { get; set; }
+        public decimal FunTl { get; set; }
     }
     public enum UsageTransportFrequency
     {
