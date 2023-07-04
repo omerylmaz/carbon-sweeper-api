@@ -174,7 +174,7 @@ namespace Persistence.Services
         public async Task<GetFootPrintWarningListResponse> GetFootPrintWarnings(int userId)
         {
             var user = await _userReadRepo.GetSingleAsync(x => x.Id == userId);
-            var  transport = await _transportReadRepo.GetSingleAsync(x => x.UserId == userId);
+            var transport = await _transportReadRepo.GetSingleAsync(x => x.UserId == userId);
             var consumption = await _consumptionReadRepo.GetSingleAsync(x => x.UserId == userId);
             var house = await _houseReadRepo.GetSingleAsync(x => x.UserId == userId);
             var messages = new List<GetFootPrintWarningResponse>();
@@ -182,12 +182,103 @@ namespace Persistence.Services
 
             if (house.LPG > FootPrintLimits.LPG) 
             {
-                messages.Add(new GetFootPrintWarningResponse() { Message = UserCalculationWarningsMessages.UserLpgBad((decimal)(house.LPG * 0.02M * 12)) , IsSuccess = false});
+                messages.Add(new GetFootPrintWarningResponse() { Message = UserCalculationWarningsMessages.UserLpgBad((decimal)(house.LPG)) , IsSuccess = false});
             }
             else
             {
-                messages.Add(new GetFootPrintWarningResponse() { Message = UserCalculationWarningsMessages.UserLPGPerfect((decimal)(house.LPG * 0.02M * 12)), IsSuccess = true });
+                messages.Add(new GetFootPrintWarningResponse() { Message = UserCalculationWarningsMessages.UserLPGPerfect((decimal)(house.LPG)), IsSuccess = true });
             }
+
+            // Electricity
+            if (house.Electricity > FootPrintLimits.Electricity)
+            {
+                messages.Add(new GetFootPrintWarningResponse() { Message = UserCalculationWarningsMessages.UserElectricityBad((decimal)(house.Electricity)), IsSuccess = false });
+            }
+            else
+            {
+                messages.Add(new GetFootPrintWarningResponse() { Message = UserCalculationWarningsMessages.UserElectricityPerfect((decimal)(house.Electricity)), IsSuccess = true });
+            }
+
+            // Coal
+            if (house.Coal > FootPrintLimits.Coal)
+            {
+                messages.Add(new GetFootPrintWarningResponse() { Message = UserCalculationWarningsMessages.UserCoalBad((decimal)(house.Coal)), IsSuccess = false });
+            }
+            else
+            {
+                messages.Add(new GetFootPrintWarningResponse() { Message = UserCalculationWarningsMessages.UserCoalPerfect((decimal)(house.Coal)), IsSuccess = true });
+            }
+
+            // Electronics
+            if (consumption.ElectronicsFootPrint > FootPrintLimits.Electronics)
+            {
+                messages.Add(new GetFootPrintWarningResponse() { Message = UserCalculationWarningsMessages.UserElectronicsBad((decimal)(consumption.ElectronicsFootPrint)), IsSuccess = false });
+            }
+            else
+            {
+                messages.Add(new GetFootPrintWarningResponse() { Message = UserCalculationWarningsMessages.UserElectronicsPerfect((decimal)(consumption.ElectronicsFootPrint)), IsSuccess = true });
+            }
+
+            // Paper Product
+            if (consumption.PaperProductsFootPrint > FootPrintLimits.PaperProducts)
+            {
+                messages.Add(new GetFootPrintWarningResponse() { Message = UserCalculationWarningsMessages.UserPaperProductsBad((decimal)(consumption.PaperProductsFootPrint)), IsSuccess = false });
+            }
+            else
+            {
+                messages.Add(new GetFootPrintWarningResponse() { Message = UserCalculationWarningsMessages.UserPaperProductsPerfect((decimal)(consumption.PaperProductsFootPrint)), IsSuccess = true });
+            }
+
+            // Dressing
+            if (consumption.DressingFootPrint > FootPrintLimits.Dressing)
+            {
+                messages.Add(new GetFootPrintWarningResponse() { Message = UserCalculationWarningsMessages.UserDressingBad((decimal)(consumption.DressingFootPrint)), IsSuccess = false });
+            }
+            else
+            {
+                messages.Add(new GetFootPrintWarningResponse() { Message = UserCalculationWarningsMessages.UserDressingPerfect((decimal)(consumption.DressingFootPrint)), IsSuccess = true });
+            }
+
+            // Fun
+            if (consumption.FunFootPrint > FootPrintLimits.Fun)
+            {
+                messages.Add(new GetFootPrintWarningResponse() { Message = UserCalculationWarningsMessages.UserFunBad((decimal)(consumption.FunFootPrint)), IsSuccess = false });
+            }
+            else
+            {
+                messages.Add(new GetFootPrintWarningResponse() { Message = UserCalculationWarningsMessages.UserFunPerfect((decimal)(consumption.FunFootPrint)), IsSuccess = true });
+            }
+
+            // Food
+            if (consumption.FoodFootPrint > FootPrintLimits.Food)
+            {
+                messages.Add(new GetFootPrintWarningResponse() { Message = UserCalculationWarningsMessages.UserFoodBad((decimal)(consumption.FoodFootPrint)), IsSuccess = false });
+            }
+            else
+            {
+                messages.Add(new GetFootPrintWarningResponse() { Message = UserCalculationWarningsMessages.UserFoodPerfect((decimal)(consumption.FoodFootPrint)), IsSuccess = true });
+            }
+
+            // Car Fuel
+            if (transportation.CarFuel > FootPrintLimits.CarFuel)
+            {
+                messages.Add(new GetFootPrintWarningResponse() { Message = UserCalculationWarningsMessages.UserCarFuelBad((decimal)(transportation.CarFuel)), IsSuccess = false });
+            }
+            else
+            {
+                messages.Add(new GetFootPrintWarningResponse() { Message = UserCalculationWarningsMessages.UserCarFuelPerfect((decimal)(transportation.CarFuel)), IsSuccess = true });
+            }
+
+            // Public Transport
+            if (transportation.PublicTransport > FootPrintLimits.PublicTransport)
+            {
+                messages.Add(new GetFootPrintWarningResponse() { Message = UserCalculationWarningsMessages.UserPublicTransportBad((decimal)(transportation.PublicTransport)), IsSuccess = false });
+            }
+            else
+            {
+                messages.Add(new GetFootPrintWarningResponse() { Message = UserCalculationWarningsMessages.UserPublicTransportPerfect((decimal)(transportation.PublicTransport)), IsSuccess = true });
+            }
+
             return new GetFootPrintWarningListResponse() { Messages = messages };
 
         }
