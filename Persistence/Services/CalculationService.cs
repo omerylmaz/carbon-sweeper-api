@@ -196,9 +196,10 @@ namespace Persistence.Services
             var house = await _houseReadRepo.GetSingleAsync(x => x.UserId == userId);
             var messages = new List<GetFootPrintWarningResponse>();
 
-            if (user.FootPrint == null) 
+            if (user.FootPrint == 0) 
             {
                 messages.Add(new GetFootPrintWarningResponse() { Message = "You havent calculate yet. Please calculate your foot print!", IsSuccess = false });
+                return new GetFootPrintWarningListResponse() { Messages = messages };
             }
 
             if (house.LPG > FootPrintLimits.LPG) 
