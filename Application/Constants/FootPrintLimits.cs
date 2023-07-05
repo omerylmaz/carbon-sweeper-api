@@ -10,13 +10,13 @@ namespace Application.Constants
     {
         public static decimal Electricity = 4500;
         public static decimal Coal = 0;
-        public static decimal LPG = 28800;
+        public static decimal LPG = 4500;
         public static decimal PublicTransport = 0.25M;
-        public static decimal Car = 36000;
-        public static decimal PaperProduct = 36;
-        public static decimal Dressing = 36;
-        public static decimal Electronics = 60;
-        public static decimal Food = 36;
-        public static decimal Fun = 12;
+        public static decimal Car = 3000;
+        public static decimal PaperProduct = 500;
+        public static decimal Dressing = 500;
+        public static decimal Electronics = 500;
+        public static decimal Food = 1500;
+        public static decimal Fun = 500;
     }
 }

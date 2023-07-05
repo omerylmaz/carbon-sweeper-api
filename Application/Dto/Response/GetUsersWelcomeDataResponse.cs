@@ -10,6 +10,6 @@ namespace Application.Dto.Response
     {
         public int TotalUserAmount { get; set; }
         public int SavedTrees { get; set; }
-        public decimal TotalFootPrint { get; set; }
+        public decimal ReducedFootPrint { get; set; }
     }
 }

@@ -102,19 +102,19 @@ namespace Persistence.Services
             switch (getCalculationRequest.TransportFrequency)
             {
                 case (short)UsageTransportFrequency.Never:
-                    publicTransportFootPrint = 0M;
+                    publicTransportFootPrint = 0;
                     break;
                 case (short)UsageTransportFrequency.Rarely:
-                    publicTransportFootPrint = 0.1M;
+                    publicTransportFootPrint = 100;
                     break;
                 case (short)UsageTransportFrequency.Sometimes:
-                    publicTransportFootPrint = 0.25M;
+                    publicTransportFootPrint = 250;
                     break;
                 case (short)UsageTransportFrequency.Often:
-                    publicTransportFootPrint = 0.50M;
+                    publicTransportFootPrint = 500;
                     break;
                 case (short)UsageTransportFrequency.Always:
-                    publicTransportFootPrint = 0.75M;
+                    publicTransportFootPrint = 750;
                     break;
                 default:
                     break;
@@ -199,110 +199,110 @@ namespace Persistence.Services
 
             if (house.LPG > FootPrintLimits.LPG) 
             {
-                messages.Add(new GetFootPrintWarningResponse() { Message = UserCalculationWarningsMessages.UserLpgBad((decimal)(house.LPG)) , IsSuccess = false});
+                messages.Add(new GetFootPrintWarningResponse() { Message = UserCalculationWarningsEncouragementMessages.UserLpgBad((decimal)(house.LPG)) , IsSuccess = false});
             }
             else
             {
-                messages.Add(new GetFootPrintWarningResponse() { Message = UserCalculationWarningsMessages.UserLPGPerfect((decimal)(house.LPG)), IsSuccess = true });
+                messages.Add(new GetFootPrintWarningResponse() { Message = UserCalculationWarningsEncouragementMessages.UserLPGPerfect((decimal)(house.LPG)), IsSuccess = true });
             }
 
             // Electricity
             if (house.Electricity > FootPrintLimits.Electricity)
             {
-                messages.Add(new GetFootPrintWarningResponse() { Message = UserCalculationWarningsMessages.UserElectricityBad((decimal)(house.Electricity)), IsSuccess = false });
+                messages.Add(new GetFootPrintWarningResponse() { Message = UserCalculationWarningsEncouragementMessages.UserElectricityBad((decimal)(house.Electricity)), IsSuccess = false });
             }
             else
             {
-                messages.Add(new GetFootPrintWarningResponse() { Message = UserCalculationWarningsMessages.UserElectricityPerfect((decimal)(house.Electricity)), IsSuccess = true });
+                messages.Add(new GetFootPrintWarningResponse() { Message = UserCalculationWarningsEncouragementMessages.UserElectricityPerfect((decimal)(house.Electricity)), IsSuccess = true });
             }
 
             // Coal
             if (house.Coal > FootPrintLimits.Coal)
             {
-                messages.Add(new GetFootPrintWarningResponse() { Message = UserCalculationWarningsMessages.UserCoalBad((decimal)(house.Coal)), IsSuccess = false });
+                messages.Add(new GetFootPrintWarningResponse() { Message = UserCalculationWarningsEncouragementMessages.UserCoalBad((decimal)(house.Coal)), IsSuccess = false });
             }
             else
             {
-                messages.Add(new GetFootPrintWarningResponse() { Message = UserCalculationWarningsMessages.UserCoalPerfect((decimal)(house.Coal)), IsSuccess = true });
+                messages.Add(new GetFootPrintWarningResponse() { Message = UserCalculationWarningsEncouragementMessages.UserCoalPerfect((decimal)(house.Coal)), IsSuccess = true });
             }
 
             // Electronics
             if (consumption.ElectronicsFootPrint > FootPrintLimits.Electronics)
             {
-                messages.Add(new GetFootPrintWarningResponse() { Message = UserCalculationWarningsMessages.UserElectronicsBad((decimal)(consumption.ElectronicsFootPrint)), IsSuccess = false });
+                messages.Add(new GetFootPrintWarningResponse() { Message = UserCalculationWarningsEncouragementMessages.UserElectronicsBad((decimal)(consumption.ElectronicsFootPrint)), IsSuccess = false });
             }
             else
             {
-                messages.Add(new GetFootPrintWarningResponse() { Message = UserCalculationWarningsMessages.UserElectronicsPerfect((decimal)(consumption.ElectronicsFootPrint)), IsSuccess = true });
+                messages.Add(new GetFootPrintWarningResponse() { Message = UserCalculationWarningsEncouragementMessages.UserElectronicsPerfect((decimal)(consumption.ElectronicsFootPrint)), IsSuccess = true });
             }
 
             // Paper Product
             if (consumption.PaperProductFootPrint > FootPrintLimits.PaperProduct)
             {
-                messages.Add(new GetFootPrintWarningResponse() { Message = UserCalculationWarningsMessages.UserPaperProductBad((decimal)(consumption.PaperProductFootPrint)), IsSuccess = false });
+                messages.Add(new GetFootPrintWarningResponse() { Message = UserCalculationWarningsEncouragementMessages.UserPaperProductBad((decimal)(consumption.PaperProductFootPrint)), IsSuccess = false });
             }
             else
             {
-                messages.Add(new GetFootPrintWarningResponse() { Message = UserCalculationWarningsMessages.UserPaperProductPerfect((decimal)(consumption.PaperProductFootPrint)), IsSuccess = true });
+                messages.Add(new GetFootPrintWarningResponse() { Message = UserCalculationWarningsEncouragementMessages.UserPaperProductPerfect((decimal)(consumption.PaperProductFootPrint)), IsSuccess = true });
             }
 
             // Dressing
             if (consumption.DressingFootPrint > FootPrintLimits.Dressing)
             {
-                messages.Add(new GetFootPrintWarningResponse() { Message = UserCalculationWarningsMessages.UserDressingBad((decimal)(consumption.DressingFootPrint)), IsSuccess = false });
+                messages.Add(new GetFootPrintWarningResponse() { Message = UserCalculationWarningsEncouragementMessages.UserDressingBad((decimal)(consumption.DressingFootPrint)), IsSuccess = false });
             }
             else
             {
-                messages.Add(new GetFootPrintWarningResponse() { Message = UserCalculationWarningsMessages.UserDressingPerfect((decimal)(consumption.DressingFootPrint)), IsSuccess = true });
+                messages.Add(new GetFootPrintWarningResponse() { Message = UserCalculationWarningsEncouragementMessages.UserDressingPerfect((decimal)(consumption.DressingFootPrint)), IsSuccess = true });
             }
 
             // Fun
             if (consumption.FunFootPrint > FootPrintLimits.Fun)
             {
-                messages.Add(new GetFootPrintWarningResponse() { Message = UserCalculationWarningsMessages.UserFunBad((decimal)(consumption.FunFootPrint)), IsSuccess = false });
+                messages.Add(new GetFootPrintWarningResponse() { Message = UserCalculationWarningsEncouragementMessages.UserFunBad((decimal)(consumption.FunFootPrint)), IsSuccess = false });
             }
             else
             {
-                messages.Add(new GetFootPrintWarningResponse() { Message = UserCalculationWarningsMessages.UserFunPerfect((decimal)(consumption.FunFootPrint)), IsSuccess = true });
+                messages.Add(new GetFootPrintWarningResponse() { Message = UserCalculationWarningsEncouragementMessages.UserFunPerfect((decimal)(consumption.FunFootPrint)), IsSuccess = true });
             }
 
             // Food
             if (consumption.FoodFootPrint > FootPrintLimits.Food)
             {
-                messages.Add(new GetFootPrintWarningResponse() { Message = UserCalculationWarningsMessages.UserFoodBad((decimal)(consumption.FoodFootPrint)), IsSuccess = false });
+                messages.Add(new GetFootPrintWarningResponse() { Message = UserCalculationWarningsEncouragementMessages.UserFoodBad((decimal)(consumption.FoodFootPrint)), IsSuccess = false });
             }
             else
             {
-                messages.Add(new GetFootPrintWarningResponse() { Message = UserCalculationWarningsMessages.UserFoodPerfect((decimal)(consumption.FoodFootPrint)), IsSuccess = true });
+                messages.Add(new GetFootPrintWarningResponse() { Message = UserCalculationWarningsEncouragementMessages.UserFoodPerfect((decimal)(consumption.FoodFootPrint)), IsSuccess = true });
             }
 
             // Car Fuel
             if (transport.CarFootPrint > FootPrintLimits.Car)
             {
-                messages.Add(new GetFootPrintWarningResponse() { Message = UserCalculationWarningsMessages.UserCarFuelBad((decimal)(transport.CarFootPrint)), IsSuccess = false });
+                messages.Add(new GetFootPrintWarningResponse() { Message = UserCalculationWarningsEncouragementMessages.UserCarFuelBad((decimal)(transport.CarFootPrint)), IsSuccess = false });
             }
             else
             {
-                messages.Add(new GetFootPrintWarningResponse() { Message = UserCalculationWarningsMessages.UserCarFuelPerfect((decimal)(transport.CarFootPrint)), IsSuccess = true });
+                messages.Add(new GetFootPrintWarningResponse() { Message = UserCalculationWarningsEncouragementMessages.UserCarFuelPerfect((decimal)(transport.CarFootPrint)), IsSuccess = true });
             }
 
-            // Public Transport
-            if (transport.PublicTransportFootPrint > FootPrintLimits.PublicTransport)
-            {
-                messages.Add(new GetFootPrintWarningResponse() { Message = UserCalculationWarningsMessages.UserPublicTransportBad((decimal)(transport.PublicTransportFootPrint)), IsSuccess = false });
-            }
-            else
-            {
-                messages.Add(new GetFootPrintWarningResponse() { Message = UserCalculationWarningsMessages.UserPublicTransportPerfect((decimal)(transport.PublicTransportFootPrint)), IsSuccess = true });
-            }
+            //// Public Transport
+            //if (transport.PublicTransportFootPrint > FootPrintLimits.PublicTransport)
+            //{
+            //    messages.Add(new GetFootPrintWarningResponse() { Message = UserCalculationWarningsEncouragementMessages.UserPublicTransportBad((decimal)(transport.PublicTransportFootPrint)), IsSuccess = false });
+            //}
+            //else
+            //{
+            //    messages.Add(new GetFootPrintWarningResponse() { Message = UserCalculationWarningsEncouragementMessages.UserPublicTransportPerfect((decimal)(transport.PublicTransportFootPrint)), IsSuccess = true });
+            //}
 
-            if (user.FootPrintReduction > 0)
+            if (user.FootPrintReduction < 0)
             {
-                messages.Add(new GetFootPrintWarningResponse() { Message = UserCalculationWarningsMessages.UserReductionPerfect(), IsSuccess = true });
+                messages.Add(new GetFootPrintWarningResponse() { Message = UserCalculationWarningsEncouragementMessages.UserReductionPerfect(), IsSuccess = true });
             }
-            else
+            else if(user.FootPrintReduction > 0)
             {
-                messages.Add(new GetFootPrintWarningResponse() { Message = UserCalculationWarningsMessages.UserReductionBad(), IsSuccess = false });
+                messages.Add(new GetFootPrintWarningResponse() { Message = UserCalculationWarningsEncouragementMessages.UserReductionBad(), IsSuccess = false });
             }
 
             return new GetFootPrintWarningListResponse() { Messages = messages };

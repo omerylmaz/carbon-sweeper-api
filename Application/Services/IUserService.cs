@@ -11,6 +11,8 @@ namespace Application.Services
     {
         public Task<GetUserFootPrintsListResponse> GetUsersFootPrintAsync();
         public Task<GetUsersWelcomeDataResponse> GetUsersWelcomeDataAsync();
+        public Task<GetUserResponse> GetUserInfos();
+
 
     }
 }
