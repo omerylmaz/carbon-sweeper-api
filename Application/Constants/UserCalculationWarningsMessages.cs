@@ -33,6 +33,15 @@ namespace Application.Constants
         {
             return $"Your lpg foot print value {value}. It is okey according to avarage user, you should keep it.";
         }
+
+        public static string UserCarFuelBad(decimal value)
+        {
+            return $"Your car fuel foot print value {value}. It is too much, you have to decrease it.";
+        }
+        public static string UserCarFuelPerfect(decimal value)
+        {
+            return $"Your car fuel foot print value {value}. It is okey according to avarage user, you should keep it.";
+        }
         public static string UserPublicTransportBad(decimal value)
         {
             return $"Your public transport foot print value {value}. It is too much, you have to decrease it.";

@@ -30,6 +30,7 @@ namespace Persistence
             services.AddScoped<IAuthService, AuthService>();
             services.AddScoped<ITokenService, TokenService>();
             services.AddScoped<ICalculationService, CalculationService>();
-    }
+            services.AddScoped<IUserService, UserService>();
+        }
     }
 }

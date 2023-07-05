@@ -11,6 +11,6 @@ namespace Application.Services
     public interface ICalculationService
     {
         Task<decimal> CalculateFootPrintAsync(GetCalculationRequest getCalculationRequest);
-        Task<GetFootPrintWarningListResponse> GetFootPrintWarnings(int userId);
+        Task<GetFootPrintWarningListResponse> GetFootPrintWarnings();
     }
 }

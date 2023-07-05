@@ -44,6 +44,8 @@ namespace Persistence.Services
             var claims = new List<Claim>()
                     {
                         new Claim("role", "User"),
+                        new Claim("userId", user.Id.ToString()),
+                        new Claim("userFullName", $"{user.FirstName} {user.LastName}")
                     };
             tokenResponse = _tokenService.CreateAccessToken(claims: claims, minute: 1000);
 

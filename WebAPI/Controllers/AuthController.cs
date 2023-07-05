@@ -3,7 +3,6 @@ using Application.Services;
 using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
-using Persistence.Services;
 
 namespace WebAPI.Controllers
 {

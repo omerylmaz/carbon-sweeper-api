@@ -9,7 +9,7 @@ namespace Application.Dto.Request
     public class GetCalculationRequest
     {
         //ton
-        public int UserId { get; set; }
+        //public int UserId { get; set; }
         public decimal ElectricityTl { get; set; } 
         public decimal CoalTl { get; set; }
         public decimal LPGTl { get; set; }

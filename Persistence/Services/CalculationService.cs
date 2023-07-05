@@ -9,6 +9,8 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.IdentityModel.Tokens.Jwt;
+using Microsoft.AspNetCore.Http;
 
 namespace Persistence.Services
 {
@@ -22,6 +24,7 @@ namespace Persistence.Services
         private readonly IWriteRepo<GeneralConsumption> _consumptionWriteRepo;
         private readonly IReadRepo<Transport> _transportReadRepo;
         private readonly IWriteRepo<Transport> _transportWriteRepo;
+        private readonly IHttpContextAccessor _httpContextAccessor;
 
 
         public CalculationService(
@@ -34,6 +37,8 @@ namespace Persistence.Services
             IWriteRepo<GeneralConsumption> consumptionWriteRepo,
             IReadRepo<Transport> transportReadRepo,
             IWriteRepo<Transport> transportWriteRepo
+,
+            IHttpContextAccessor httpContextAccessor
             //house
 
             )
@@ -46,12 +51,19 @@ namespace Persistence.Services
             _consumptionWriteRepo = consumptionWriteRepo;
             _transportReadRepo = transportReadRepo;
             _transportWriteRepo = transportWriteRepo;
+            _httpContextAccessor = httpContextAccessor;
             //house
         }
         public async Task<decimal> CalculateFootPrintAsync(GetCalculationRequest getCalculationRequest)
         {
+            HttpContext context = _httpContextAccessor.HttpContext; //tekrarlı yapı solide uygun değil bir helper yapabilirsin bunun için
+            var token = context.Request.Headers["Authorization"].ToString().Replace("Bearer ", "");
+            var tokenHandler = new JwtSecurityTokenHandler();
+            var jwtToken = tokenHandler.ReadJwtToken(token);
+            string userId = jwtToken.Claims.FirstOrDefault(claim => claim.Type == "userId")?.Value;
+
             //var user = await _userReadRepo.GetByIdAsync(getCalculationRequest.UserId);
-            var user = await _userReadRepo.GetSingleAsync(x => (int)x.Id == (int)getCalculationRequest.UserId);
+            var user = await _userReadRepo.GetSingleAsync(x => (int)x.Id == int.Parse(userId));
 
 
             var electricityFootPrint = getCalculationRequest.ElectricityTl * 0.8M * 12;
@@ -110,14 +122,14 @@ namespace Persistence.Services
 
 
 
-            var house = await _houseReadRepo.GetSingleAsync(x => x.UserId == getCalculationRequest.UserId);
+            var house = await _houseReadRepo.GetSingleAsync(x => x.UserId == user.Id);
             if (house == null)
             {
                 house = new House();
                 house.Coal = coalFootPrint;
                 house.LPG = lpgFootPrint;
                 house.Electricity = electricityFootPrint;
-                house.UserId = getCalculationRequest.UserId;
+                house.UserId = int.Parse(userId);
                 await _houseWriteRepo.AddAsync(house);
 
             }
@@ -126,16 +138,16 @@ namespace Persistence.Services
                 house.Coal = coalFootPrint;
                 house.LPG = lpgFootPrint;
                 house.Electricity = electricityFootPrint;
-                house.UserId = getCalculationRequest.UserId;
+                house.UserId = int.Parse(userId);
             }
             await _houseWriteRepo.SaveChangesAsync();
 
-            var generalConsumption = await _consumptionReadRepo.GetSingleAsync(x => x.UserId == getCalculationRequest.UserId);
+            var generalConsumption = await _consumptionReadRepo.GetSingleAsync(x => x.UserId == user.Id);
 
             if (generalConsumption == null)
             {
                 generalConsumption = new GeneralConsumption();
-                generalConsumption.UserId = getCalculationRequest.UserId;
+                generalConsumption.UserId = int.Parse(userId);
                 await _consumptionWriteRepo.AddAsync(generalConsumption);
             }
 
@@ -147,16 +159,16 @@ namespace Persistence.Services
 
             await _consumptionWriteRepo.SaveChangesAsync();
 
-            var transport = await _transportReadRepo.GetSingleAsync(x => x.UserId == getCalculationRequest.UserId);
+            var transport = await _transportReadRepo.GetSingleAsync(x => x.UserId == user.Id);
             if (transport == null)
             {
                 transport = new Transport();
-                transport.UserId = getCalculationRequest.UserId;
+                transport.UserId = int.Parse(userId);
                 await _transportWriteRepo.AddAsync(transport);
             }
             transport.CarFootPrint = carFuelFootPrint;
             transport.PublicTransportFootPrint = publicTransportFootPrint;
-            transport.UserId = getCalculationRequest.UserId;
+            transport.UserId = int.Parse(userId);
             await _transportWriteRepo.SaveChangesAsync();
 
             var total = electricityFootPrint + coalFootPrint + lpgFootPrint + carFuelFootPrint + dressingFootPrint + electronicsFootPrint + paperProductFootPrint + funFootPrint + foodFootPrint + publicTransportFootPrint;
@@ -171,8 +183,13 @@ namespace Persistence.Services
             //user.FootPrint = total;
         }
 
-        public async Task<GetFootPrintWarningListResponse> GetFootPrintWarnings(int userId)
+        public async Task<GetFootPrintWarningListResponse> GetFootPrintWarnings()
         {
+            HttpContext context = _httpContextAccessor.HttpContext;
+            var token = context.Request.Headers["Authorization"].ToString().Replace("Bearer ", "");
+            var tokenHandler = new JwtSecurityTokenHandler();
+            var jwtToken = tokenHandler.ReadJwtToken(token);
+            int userId = int.Parse(jwtToken.Claims.FirstOrDefault(claim => claim.Type == "userId")?.Value);
             var user = await _userReadRepo.GetSingleAsync(x => x.Id == userId);
             var transport = await _transportReadRepo.GetSingleAsync(x => x.UserId == userId);
             var consumption = await _consumptionReadRepo.GetSingleAsync(x => x.UserId == userId);
@@ -220,14 +237,14 @@ namespace Persistence.Services
             }
 
             // Paper Product
-            //if (consumption.PaperProductsFootPrint > FootPrintLimits.PaperProducts)
-            //{
-            //    messages.Add(new GetFootPrintWarningResponse() { Message = UserCalculationWarningsMessages.UserPaperProductsBad((decimal)(consumption.PaperProductsFootPrint)), IsSuccess = false });
-            //}
-            //else
-            //{
-            //    messages.Add(new GetFootPrintWarningResponse() { Message = UserCalculationWarningsMessages.UserPaperProductsPerfect((decimal)(consumption.PaperProductsFootPrint)), IsSuccess = true });
-            //}
+            if (consumption.PaperProductFootPrint > FootPrintLimits.PaperProduct)
+            {
+                messages.Add(new GetFootPrintWarningResponse() { Message = UserCalculationWarningsMessages.UserPaperProductBad((decimal)(consumption.PaperProductFootPrint)), IsSuccess = false });
+            }
+            else
+            {
+                messages.Add(new GetFootPrintWarningResponse() { Message = UserCalculationWarningsMessages.UserPaperProductPerfect((decimal)(consumption.PaperProductFootPrint)), IsSuccess = true });
+            }
 
             // Dressing
             if (consumption.DressingFootPrint > FootPrintLimits.Dressing)
@@ -260,24 +277,24 @@ namespace Persistence.Services
             }
 
             // Car Fuel
-            //if (transportation.CarFuel > FootPrintLimits.CarFuel)
-            //{
-            //    messages.Add(new GetFootPrintWarningResponse() { Message = UserCalculationWarningsMessages.UserCarFuelBad((decimal)(transportation.CarFuel)), IsSuccess = false });
-            //}
-            //else
-            //{
-            //    messages.Add(new GetFootPrintWarningResponse() { Message = UserCalculationWarningsMessages.UserCarFuelPerfect((decimal)(transportation.CarFuel)), IsSuccess = true });
-            //}
+            if (transport.CarFootPrint > FootPrintLimits.Car)
+            {
+                messages.Add(new GetFootPrintWarningResponse() { Message = UserCalculationWarningsMessages.UserCarFuelBad((decimal)(transport.CarFootPrint)), IsSuccess = false });
+            }
+            else
+            {
+                messages.Add(new GetFootPrintWarningResponse() { Message = UserCalculationWarningsMessages.UserCarFuelPerfect((decimal)(transport.CarFootPrint)), IsSuccess = true });
+            }
 
-            //// Public Transport
-            //if (transportation.PublicTransport > FootPrintLimits.PublicTransport)
-            //{
-            //    messages.Add(new GetFootPrintWarningResponse() { Message = UserCalculationWarningsMessages.UserPublicTransportBad((decimal)(transportation.PublicTransport)), IsSuccess = false });
-            //}
-            //else
-            //{
-            //    messages.Add(new GetFootPrintWarningResponse() { Message = UserCalculationWarningsMessages.UserPublicTransportPerfect((decimal)(transportation.PublicTransport)), IsSuccess = true });
-            //}
+            // Public Transport
+            if (transport.PublicTransportFootPrint > FootPrintLimits.PublicTransport)
+            {
+                messages.Add(new GetFootPrintWarningResponse() { Message = UserCalculationWarningsMessages.UserPublicTransportBad((decimal)(transport.PublicTransportFootPrint)), IsSuccess = false });
+            }
+            else
+            {
+                messages.Add(new GetFootPrintWarningResponse() { Message = UserCalculationWarningsMessages.UserPublicTransportPerfect((decimal)(transport.PublicTransportFootPrint)), IsSuccess = true });
+            }
 
             return new GetFootPrintWarningListResponse() { Messages = messages };
 

@@ -24,11 +24,11 @@ namespace WebAPI.Controllers
             return Ok(result);
         }
 
-        [Route("get-foot-print-warnings/{userId}")]
+        [Route("get-foot-print-warnings")]
         [HttpGet]
-        public async Task<IActionResult> GetFootPrintWarnings([FromRoute]int userId)
+        public async Task<IActionResult> GetFootPrintWarnings()
         {
-            var result = await _calculatorService.GetFootPrintWarnings(userId);
+            var result = await _calculatorService.GetFootPrintWarnings();
             //var user = await _userService.LoginAsync(loginUserRequest);
             //var user = await _authService.LoginAsync(loginUserRequest);
             return Ok(result);

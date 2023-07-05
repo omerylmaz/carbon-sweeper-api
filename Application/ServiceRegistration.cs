@@ -12,6 +12,8 @@ namespace Application
     {
         public static void AddApplicationServices(this IServiceCollection services)
         {
+            services.AddAutoMapper(Assembly.GetExecutingAssembly());
+            //services.
         }
     }
 }
