@@ -10,5 +10,7 @@ namespace Application.Services
     public interface IUserService
     {
         public Task<GetUserFootPrintsListResponse> GetUsersFootPrintAsync();
+        public Task<GetUsersWelcomeDataResponse> GetUsersWelcomeDataAsync();
+
     }
 }

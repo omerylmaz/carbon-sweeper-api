@@ -90,5 +90,13 @@ namespace Application.Constants
         {
             return $"Your fun foot print value {value}. It is okey according to avarage user, you should keep it.";
         }
+        public static string UserReductionBad()
+        {
+            return $"You have reduced your carbon footprint. Good job to you";
+        }
+        public static string UserReductionPerfect()
+        {
+            return $"You have increased your carbon footprint. I hope you will decrease it.";
+        }
     }
 }

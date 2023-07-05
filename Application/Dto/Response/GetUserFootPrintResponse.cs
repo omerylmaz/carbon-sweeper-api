@@ -9,6 +9,13 @@ namespace Application.Dto.Response
     public class GetUserFootPrintResponse
     {
         public string FullName { get; set; }
-        public decimal FootPrint { get; set; }
+        private decimal footPrint;
+
+        public decimal FootPrint
+        {
+            get { return footPrint; }
+            set { footPrint = value / 1000; }
+        }
+
     }
 }

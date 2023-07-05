@@ -296,6 +296,15 @@ namespace Persistence.Services
                 messages.Add(new GetFootPrintWarningResponse() { Message = UserCalculationWarningsMessages.UserPublicTransportPerfect((decimal)(transport.PublicTransportFootPrint)), IsSuccess = true });
             }
 
+            if (user.FootPrintReduction > 0)
+            {
+                messages.Add(new GetFootPrintWarningResponse() { Message = UserCalculationWarningsMessages.UserReductionPerfect(), IsSuccess = true });
+            }
+            else
+            {
+                messages.Add(new GetFootPrintWarningResponse() { Message = UserCalculationWarningsMessages.UserReductionBad(), IsSuccess = false });
+            }
+
             return new GetFootPrintWarningListResponse() { Messages = messages };
 
         }

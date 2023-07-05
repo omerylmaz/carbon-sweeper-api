@@ -22,5 +22,13 @@ namespace WebAPI.Controllers
             var response = await _userService.GetUsersFootPrintAsync();
             return Ok(response);
         }
+
+        [Route("welcome")]
+        [HttpGet]
+        public async Task<IActionResult> GetUsersWelcomeDataAsync()
+        {
+            var response = await _userService.GetUsersWelcomeDataAsync();
+            return Ok(response);
+        }
     }
 }
