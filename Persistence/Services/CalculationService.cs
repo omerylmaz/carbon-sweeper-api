@@ -196,6 +196,10 @@ namespace Persistence.Services
             var house = await _houseReadRepo.GetSingleAsync(x => x.UserId == userId);
             var messages = new List<GetFootPrintWarningResponse>();
 
+            if (user.FootPrint == null) 
+            {
+                messages.Add(new GetFootPrintWarningResponse() { Message = "You havent calculate yet. Please calculate your foot print!", IsSuccess = false });
+            }
 
             if (house.LPG > FootPrintLimits.LPG) 
             {
@@ -296,11 +300,11 @@ namespace Persistence.Services
             //    messages.Add(new GetFootPrintWarningResponse() { Message = UserCalculationWarningsEncouragementMessages.UserPublicTransportPerfect((decimal)(transport.PublicTransportFootPrint)), IsSuccess = true });
             //}
 
-            if (user.FootPrintReduction < 0)
+            if (user.FootPrintReduction > 0)
             {
                 messages.Add(new GetFootPrintWarningResponse() { Message = UserCalculationWarningsEncouragementMessages.UserReductionPerfect(), IsSuccess = true });
             }
-            else if(user.FootPrintReduction > 0)
+            else if(user.FootPrintReduction < 0)
             {
                 messages.Add(new GetFootPrintWarningResponse() { Message = UserCalculationWarningsEncouragementMessages.UserReductionBad(), IsSuccess = false });
             }

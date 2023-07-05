@@ -22,12 +22,12 @@
 
     public static string UserLpgBad(decimal value)
     {
-        return $"Your LPG footprint value {value/1000} ton is high. Consider reducing your LPG usage and explore energy-efficient alternatives.";
+        return $"Your natural gas footprint value {value/1000} ton is high. Consider reducing your natural gas usage and explore energy-efficient alternatives.";
     }
 
     public static string UserLPGPerfect(decimal value)
     {
-        return $"Your LPG footprint value {value/1000} ton is within a reasonable range. Keep up the good work and continue to minimize your carbon emissions.";
+        return $"Your natural gas footprint value {value/1000} ton is within a reasonable range. Keep up the good work and continue to minimize your carbon emissions.";
     }
 
     public static string UserCarFuelBad(decimal value)

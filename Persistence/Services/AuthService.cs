@@ -70,6 +70,11 @@ namespace Persistence.Services
 
         public async Task<bool> RegisterAsync(RegisterRequest registerUserRequest)
         {
+            bool userDoesExist = _userReadRepo.Table.Any(x => x.Email == registerUserRequest.Email);
+            if (userDoesExist)
+            {
+                throw new Exception("User exist already!!!");
+            }
             var user = new User()
             {
                 Email = registerUserRequest.Email,
